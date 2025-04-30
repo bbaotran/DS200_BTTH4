@@ -1,6 +1,7 @@
 from trainer import SparkConfig, Trainer
 from models import SVM
 from transforms import Transforms, RandomHorizontalFlip, Normalize
+from models import DecisionTree
 
 transforms = Transforms([
     RandomHorizontalFlip(p=0.345), 
@@ -14,7 +15,13 @@ if __name__ == "__main__":
 
     spark_config = SparkConfig()
 
-    svm = SVM(loss="squared_hinge", penalty="l2")
-    trainer = Trainer(svm, "train", spark_config, transforms)
-    trainer.train()
+    # svm = SVM(loss="squared_hinge", penalty="l2")
+    # trainer = Trainer(svm, "train", spark_config, transforms)
+    # trainer.train()
+    
     # trainer.predict()
+    
+    dt_deep = DecisionTree(criterion='gini', max_depth=20)
+    trainer = Trainer(dt_deep, "train", spark_config, transforms)
+    trainer.train()
+    
